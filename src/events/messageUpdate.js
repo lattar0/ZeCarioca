@@ -5,6 +5,6 @@ module.exports = class Message {
 
   event (oldMessage, newMessage) {
     if (oldMessage === newMessage) return
-    this.emit('message', newMessage)
+    this.client.emit('message', newMessage)
   }
 }
