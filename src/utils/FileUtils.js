@@ -4,6 +4,7 @@ const { resolve } = require('path')
 module.exports = function readFile ({ dir }, callback) {
   const files = readdirSync(dir)
 
+  // eslint-disable-next-line array-callback-return
   files.map(file => {
     const fullPath = resolve(dir, file)
 
