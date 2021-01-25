@@ -49,8 +49,8 @@ jobs:
         username: ${{ secrets.REMOTE_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          docker stop codya
-          docker rm codya
+          docker stop ze
+          docker rm ze
           docker pull shaundeveloper/zecarioca:dev
-          docker run --name codya --env-file ~/.env --restart unless-stopped -d shaundeveloper/zecarioca:dev
+          docker run --name ze --env-file ~/.env --restart unless-stopped -d shaundeveloper/zecarioca:dev
           docker system prune -a -f
