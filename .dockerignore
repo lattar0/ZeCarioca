@@ -1,11 +1,17 @@
 .github/
 .vscode/
 .git/
+.deploy/
 node_modules/
+test/
 
 .editorconfig
 .env
 .eslintrc
-.gitinore
+.gitignore
+.gitmodules
+.travis.yml
 *Dockerfile*
+*docker-compose*
 LICENSE
+nodemon.json
