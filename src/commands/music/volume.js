@@ -1,4 +1,4 @@
-const { Command, ParrotEmbed } = require('../../')
+const { Command } = require('../../')
 
 module.exports = class VolumeCommand extends Command {
   constructor (client) {
@@ -15,25 +15,19 @@ module.exports = class VolumeCommand extends Command {
 
   async run ({ message, author, channel, member }, args) {
     const player = this.client.music.players.get(message.guild.id)
-    const volume = args[0]
 
-    const volumeEmbed = new ParrotEmbed(author)
+    if (!player || player.queue.length < 0) return channel.sendTimeout('⚠️ | Não há músicas tocando no momento!')
 
-    if (!player || player.queue.length <= 0) return channel.sendTimeout(volumeEmbed.setDescription('⚠️ | Não há músicas tocando no momento!'))
+    if (player.voiceChannel !== member.voice.channel.id) return channel.sendTimeout('⚠️ | Você não está no mesmo canal que eu!')
 
-    if (player.voiceChannel !== member.voice.channel.id) return channel.sendTimeout(volumeEmbed.setDescription('⚠️ | Você não está no mesmo canal que eu!'))
+    const volume = parseInt(args[0]) || `🎵 | O volume atual está em: ${player.state.volume}%`
 
-    if (!volume) {
-      message.channel.sendTimeout(volumeEmbed.setDescription(`<:musicSettings:708136949487239198> | O volume atual está em: ${player.state.volume}%`))
-    } else if (isNaN(volume)) {
-      message.channel.sendTimeout(volumeEmbed.setDescription('⚠️ | Digite um `número` para definir.'))
-    } else if (volume > 250) {
-      message.channel.sendTimeout(volumeEmbed.setDescription('⚠️ | Digite um `número` para **menor** que 250 para definir.'))
-    } else {
-      player.volume(volume)
-      message.channel.sendTimeout(volumeEmbed.setDescription(`<:musicSettings:708136949487239198> | O volume foi definido para: ${args[0]}%`))
+    if (isNaN(volume) || volume > 250 || volume <= 0) {
+      return message.channel.sendTimeout('⚠️ | Digite um `número` inteiro entre 1 e 250 para definir.')
     }
 
-    message.channel.reactMessage(player.textChannel.lastMessageID)
+    player.volume(volume)
+    message.channel.sendTimeout(`🎵 | O volume foi definido para: ${args[0]}%`)
+    message.channel.reactMessage(author.lastMessageID)
   }
 }
