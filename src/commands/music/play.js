@@ -38,7 +38,8 @@ module.exports = class PlayCommand extends Command {
       guild: message.guild.id,
       voiceChannel: memberChannel,
       textChannel: channel,
-      dj: author
+      dj: author,
+      guildVolume: 100
     }, { selfDeaf: true })
 
     if (player.voiceChannel !== memberChannel) return channel.sendTimeout(new ParrotEmbed(author).setDescription('⚠️ | Você não está no mesmo canal que eu!'))

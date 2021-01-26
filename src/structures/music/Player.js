@@ -8,6 +8,8 @@ module.exports = class CariocaPlayer extends GorilinkPlayer {
     this.manager = manager
 
     this.dj = options.dj
+
+    this.guildVolume = options.guildVolume
   }
 
   addToQueue (track, user) {
