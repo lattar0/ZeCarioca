@@ -1,4 +1,4 @@
-const { Command, ParrotEmbed } = require('../../')
+const { Command } = require('../../')
 
 module.exports = class DeleteCommand extends Command {
   constructor (client) {
@@ -11,23 +11,17 @@ module.exports = class DeleteCommand extends Command {
     }, client)
   }
 
-  async run ({ message, channel, author }, args) {
-    const bulkEmbed = new ParrotEmbed(author)
+  async run ({ message, channel }, args) {
+    if (!message.member.hasPermission('MANAGE_MESSAGES')) return channel.sendTimeout('⚠️ | Você não tem permissão para apagar mensagens!')
 
-    if (!message.member.hasPermission('MANAGE_MESSAGES')) return channel.sendTimeout(bulkEmbed.setDescription('⚠️ | Você não tem permissão para apagar mensagens!'))
+    const numberMessages = parseInt(args[0])
 
-    const msgDel = args[0]
+    if (isNaN(args[0]) || numberMessages <= 0 || numberMessages > 100) return channel.sendTimeout('⚠️ | Insira um número positivo entre 1 e 100!')
 
-    if (isNaN(msgDel)) return channel.sendTimeout(bulkEmbed.setDescription('⚠️ | Insira um número inteiro!'))
+    const fetchMessages = await channel.messages.fetch({ limit: numberMessages })
 
-    const numberMessages = Math.floor(parseInt(msgDel))
+    message.channel.bulkDelete(fetchMessages)
 
-    if (numberMessages <= 0) return channel.sendTimeout(bulkEmbed.setDescription('⚠️ | Insira um número positivo!'))
-
-    channel.messages.fetch({ limit: numberMessages }).then(messages => {
-      message.channel.bulkDelete(messages)
-    })
-
-    channel.sendTimeout(bulkEmbed.setDescription(`🥳 | Eu consegui apagar ${numberMessages} ${numberMessages > 1 ? 'mensagens' : 'mensagem'}!`), 60000)
+    channel.sendTimeout(`🥳 | Eu consegui apagar ${numberMessages} ${numberMessages > 1 ? 'mensagens' : 'mensagem'}!`, 30000)
   }
 }

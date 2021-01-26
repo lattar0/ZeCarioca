@@ -14,7 +14,7 @@ module.exports = class EvalCommand extends Command {
     }, client)
   }
 
-  async run ({ message, channel, author }, args) {
+  async run ({ message, channel }, args) {
     try {
       let evaled = eval(args.join(' '))
 

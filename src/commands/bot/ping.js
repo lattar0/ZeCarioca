@@ -11,7 +11,7 @@ module.exports = class PingCommand extends Command {
     }, client)
   }
 
-  async run ({ author, client, channel }) {
+  async run ({ client, channel }) {
     channel.send('🏓 | Meu ping atualmente é: **' + Math.round(client.ws.ping) + '**ms!')
   }
 }
