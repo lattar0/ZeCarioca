@@ -31,7 +31,7 @@ module.exports = class VolumeCommand extends Command {
       message.channel.sendTimeout(volumeEmbed.setDescription('⚠️ | Digite um `número` para **menor** que 250 para definir.'))
     } else {
       player.volume(volume)
-      message.channel.sendTimeout(volume.setDescription(`<:musicSettings:708136949487239198> | O volume foi definido para: ${args[0]}%`))
+      message.channel.sendTimeout(volumeEmbed.setDescription(`<:musicSettings:708136949487239198> | O volume foi definido para: ${args[0]}%`))
     }
 
     message.channel.reactMessage(player.textChannel.lastMessageID)
