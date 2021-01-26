@@ -11,11 +11,11 @@ module.exports = class AvatarCommand extends Command {
     }, client)
   }
 
-  async run ({ message, channel, author }, [userID]) {
+  async run ({ message, channel, author }, userID) {
     const user = message.mentions.users.first() || this.client.users.cache.get(userID) || message.author
 
     const avatarUrl = user.displayAvatarURL({ format: 'png', dynamic: true, size: 2048 })
 
-    return channel.send(new ParrotEmbed(author).setDescription(`Aqui está o avatar de: ${user.username}`).setImage(avatarUrl))
+    return channel.send(new ParrotEmbed(author).setDescription('Aqui está o avatar de:' + user.username).setImage(avatarUrl))
   }
 }

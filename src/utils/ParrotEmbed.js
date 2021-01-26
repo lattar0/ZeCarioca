@@ -1,11 +1,10 @@
 const { MessageEmbed } = require('discord.js')
-const { EMBED_COLOR } = require('./Constants')
 
 module.exports = class ParrotEmbed extends MessageEmbed {
   constructor (user) {
     super(user)
 
-    this.setColor(EMBED_COLOR)
+    this.setColor('#56784d')
     if (user) this.setFooter(user.tag, user.displayAvatarURL()).setTimestamp()
   }
 }

@@ -1,4 +1,4 @@
-const { Command, ParrotEmbed } = require('../../')
+const { Command } = require('../../')
 
 module.exports = class PingCommand extends Command {
   constructor (client) {
@@ -12,7 +12,6 @@ module.exports = class PingCommand extends Command {
   }
 
   async run ({ author, client, channel }) {
-    channel.send(new ParrotEmbed(author)
-      .setDescription(`Meu ping atualmente é: ${Math.round(client.ws.ping)}!`))
+    channel.send('🏓 | Meu ping atualmente é: **' + Math.round(client.ws.ping) + '**ms!')
   }
 }

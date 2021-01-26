@@ -1,5 +1,5 @@
 /* eslint-disable no-eval */
-const { Command, ParrotEmbed } = require('../../')
+const { Command } = require('../../')
 
 module.exports = class EvalCommand extends Command {
   constructor (client) {
@@ -15,20 +15,14 @@ module.exports = class EvalCommand extends Command {
   }
 
   async run ({ message, channel, author }, args) {
-    if (message.content.includes('token')) return message.reply('are you stupid, or what?')
-
     try {
-      const input = args.join(' ')
-      let output = await eval(input)
+      let evaled = eval(args.join(' '))
 
-      if (typeof output !== 'string') { output = require('util').inspect(output, { depth: 0 }) }
-      const embed = new ParrotEmbed(author)
-        .setAuthor('Eval')
-        .addField('Input', `\`\`\`js\n${input}\n\`\`\``)
-        .addField('Output', `\`\`\`js\n${output}\n\`\`\``)
-        .setFooter(author.tag, this.client.user.displayAvatarURL)
-        .setTimestamp()
-      channel.send(embed)
+      if (typeof evaled !== 'string') { evaled = require('util').inspect(evaled, { depth: 0 }) }
+
+      if (evaled === this.client.token) evaled = '🤙'
+
+      channel.send('```js\n' + evaled + '```')
     } catch (e) {
       channel.send(e)
     }

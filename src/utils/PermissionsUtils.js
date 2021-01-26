@@ -1,7 +1,6 @@
-const { DEVELOPERS_ID } = require('./Constants')
 
-const thisDeveloper = (author) => {
-  return DEVELOPERS_ID.includes(author)
+const thisDeveloper = (client, author) => {
+  return client.config.developers.includes(author)
 }
 
 module.exports = thisDeveloper

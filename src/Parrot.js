@@ -3,15 +3,22 @@ const { EventLoader, CommandLoader } = require('./loaders')
 const { GorilinkManager } = require('gorilink')
 const { ParrotEmbed } = require('./utils/')
 const { CariocaPlayer } = require('./structures/music')
-const nodes = JSON.parse(process.env.LAVALINKS)
 const eventEmbed = new ParrotEmbed()
 
 require('./structures/discord')
 
 module.exports = class Parrot extends Client {
-  constructor () {
+  constructor (options = {}) {
     super('client')
-    this.music = new GorilinkManager(this, nodes, {
+
+    this.config = {
+      nodes: options.nodes,
+      developers: options.developers,
+      prefixes: options.prefixes,
+      embed_color: options.embed_color
+    }
+
+    this.music = new GorilinkManager(this, this.config.nodes, {
       Player: CariocaPlayer,
       sendWS: (data) => {
         const guild = this.guilds.cache.get(data.d.guild_id)

@@ -11,6 +11,9 @@ module.exports = class BotInfoCommand extends Command {
   }
 
   run ({ channel, author }) {
-    channel.send(new ParrotEmbed(author).setDescription('Em breve mais informações 👍').addField('Convite sem permissão:', '[Clique aqui](https://discord.com/api/oauth2/authorize?client_id=' + this.client.user.id + '&permissions=0&scope=bot)').addField('Convite com permissão:', '[Clique aqui](https://discord.com/api/oauth2/authorize?client_id=721849985343422505&permissions=8&scope=bot)').addField('Servidor de Suporte:', '[Clique aqui](https://discord.gg/ESQVHnmpaG)'))
+    channel.send(new ParrotEmbed(author)
+      .setDescription('Em breve mais informações 👍')
+      .addField('Convite do Bot:', '[Clique aqui](' + this.client.inviteBot + ')')
+      .addField('Servidor de Suporte:', '[Clique aqui](https://discord.gg/zvH6q5xHWJ)'))
   }
 }

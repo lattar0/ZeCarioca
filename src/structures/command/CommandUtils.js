@@ -8,10 +8,10 @@ module.exports = class CommandUtils {
     }
   }
 
-  static util ({ author, voiceChannel }, opts = {}) {
+  static util ({ client, author, voiceChannel }, opts = {}) {
     const options = this.parseOptions(opts)
 
-    if (options.devOnly && !thisDeveloper(author.id)) {
+    if (options.devOnly && !thisDeveloper(client, author.id)) {
       throw new Error('🚫 | Somente meus desenvolvedores podem usar o comando!')
     }
 

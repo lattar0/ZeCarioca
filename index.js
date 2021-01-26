@@ -1,5 +1,8 @@
+require('./src/database/Mongo')
+
 const Parrot = require('./src/Parrot')
-const client = new Parrot()
+const config = require('./config')
+const client = new Parrot(config)
 
 require('moment-duration-format')
 
