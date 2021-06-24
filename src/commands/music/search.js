@@ -43,25 +43,25 @@ module.exports = class SearchCommand extends Command {
         textChannel: channel,
         dj: author
       }, { selfDeaf: true })
-  
+
       if (m.content === 'cancelar') {
         if (!player) player.destroy()
         msg.delete()
-        return channel.sendTimeout(warnsEmbeds.setDescription('<:musicEject:708136949365473340> | Pesquisa cancelada.'))
+        return channel.sendTimeout(warnsEmbeds.setDescription('❌ | Pesquisa cancelada.'))
       }
-  
+
       const selected = parseInt(m.content) - 1
-  
+
       if (isNaN(m.content)) return channel.sendTimeout(warnsEmbeds.setDescription('⚠️ | Você não forneceu um número!'))
-  
+
       player.addToQueue(tracks[selected], message.author)
-  
-      channel.send(new ParrotEmbed().setDescription(`<:music:708136949189443645> | Adicionado na playlist: **${tracks[selected].title}**.`))
-  
+
+      channel.send(new ParrotEmbed().setDescription(`▶️ | Adicionado na playlist: **${tracks[selected].title}**.`))
+
       msg.delete()
-  
+
       if (!player.playing) return player.play()
-  
+
       message.channel.reactMessage(player.textChannel.lastMessageID)
 
     })

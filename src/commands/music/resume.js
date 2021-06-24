@@ -23,7 +23,7 @@ module.exports = class ResumeCommand extends Command {
 
     if (!player.paused) return message.channel.sendTimeout(resumeQueue.setDescription('⚠️ | Á música não está pausada.'))
 
-    message.channel.sendTimeout(resumeQueue.setDescription('<:musicPlay:708136949755674654> | A música foi retomada.'))
+    message.channel.sendTimeout(resumeQueue.setDescription('▶️ | A música foi retomada.'))
 
     player.pause(false)
 

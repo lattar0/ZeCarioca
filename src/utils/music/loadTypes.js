@@ -13,7 +13,7 @@ module.exports = async (player, channel, author, args) => {
     case 'SEARCH_RESULT':
     case 'TRACK_LOADED': {
       player.addToQueue(tracks[0], author)
-      channel.sendTimeout(embed.setDescription(`<:music:708136949189443645> | Adicionado na fila: **${tracks[0].title}**!`))
+      channel.sendTimeout(embed.setDescription(`🎵 | Adicionado na fila: **${tracks[0].title}**!`))
 
       if (!player.playing) return player.play()
       break
@@ -22,7 +22,7 @@ module.exports = async (player, channel, author, args) => {
     case 'PLAYLIST_LOADED': {
       for (const track of tracks) player.addToQueue(track, author)
 
-      channel.sendTimeout(embed.setDescription(`<:music:708136949189443645> | Adicionei \`${tracks.length}\` músicas da playlist \`${playlistInfo.name}\`.`))
+      channel.sendTimeout(embed.setDescription(`🎵 | Adicionei \`${tracks.length}\` músicas da playlist \`${playlistInfo.name}\`.`))
       if (!player.playing) return player.play()
       break
     }
