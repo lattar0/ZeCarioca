@@ -24,7 +24,7 @@ module.exports = class BassBoostCommand extends Command {
 
     const { type, enabled } = player.bassboost ? ({ type: 0, enabled: false }) : ({ type: 1, enabled: true })
 
-    channel.sendTimeout(bassboostEmbed.setDescription(`<:musicSettings:708136949487239198> | O Bassboost foi definido como ${enabled ? '`ligado`' : '`desligado`'}!`))
+    channel.sendTimeout(bassboostEmbed.setDescription(`💀 | O Bassboost foi definido como ${enabled ? '`ligado`' : '`desligado`'}!`))
 
     player.setEQ(Array(6).fill(0).map((n, i) => ({ band: i, gain: type })))
 
