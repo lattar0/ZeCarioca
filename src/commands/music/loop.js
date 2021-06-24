@@ -24,27 +24,27 @@ module.exports = class LoopCommand extends Command {
 
     if (author.id !== player.dj.id || author.id !== player.track.requester.id) return channel.sendTimeout(messageLoop.setDescription('⚠️ | Você não é o DJ/requester deste(a) canal/música.'))
 
-    if (!option) return channel.sendTimeout(messageLoop.setDescription('⚠️ | Insira `0, 1 ou 2`.'))
+    if (!option) return channel.sendTimeout(messageLoop.setDescription("⚠️ | Insira `0, 1 ou 2`.\n\n `0`: desliga o loop. \n `1`: define para a música atual. \n `2`: define para todas as músicas da lista."))
 
     switch (option.toLowerCase()) {
       case '1':
       case 'single': {
         player.loop(1)
-        channel.sendTimeout(messageLoop.setDescription('<:musicRepeat:708136949285650463> | O loop foi definido para a música atual!'))
+        channel.sendTimeout(messageLoop.setDescription('🔂 | O loop foi definido para a música atual!'))
         break
       }
 
       case '2':
       case 'all': {
         player.loop(2)
-        channel.sendTimeout(messageLoop.setDescription('<:musicRepeat:708136949285650463> | O loop foi definido para a queue inteira!'))
+        channel.sendTimeout(messageLoop.setDescription('🔁 | O loop foi definido para a queue inteira!'))
         break
       }
 
       case '0':
       case 'off': {
         player.loop(0)
-        channel.sendTimeout(messageLoop.setDescription('<:musicRepeat:708136949285650463> | O loop foi desligado!'))
+        channel.sendTimeout(messageLoop.setDescription('⛔ | O loop foi desligado!'))
         break
       }
     }
