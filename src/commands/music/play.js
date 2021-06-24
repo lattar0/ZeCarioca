@@ -1,7 +1,5 @@
 const { Command, ParrotEmbed } = require('../../')
 const { loadTypes } = require('../../utils/music')
-const Mongo = require('../../database/Mongo')
-const database = new Mongo()
 
 module.exports = class PlayCommand extends Command {
   constructor (client) {
@@ -20,20 +18,7 @@ module.exports = class PlayCommand extends Command {
 
   async run ({ message, channel, member, author }, args) {
     const memberChannel = member.voice.channel.id
-    const data = await database.find({ type: 'Users', id: author.id })
-
-    if (data) {
-      data.songsPlayed++
-      await data.save()
-    } else {
-      const newUser = await database.add({
-        type: 'Users',
-        _id: author.id,
-        songsPlayed: 1
-      })
-      await newUser.save()
-    }
-
+    
     const player = await this.client.music.join({
       guild: message.guild.id,
       voiceChannel: memberChannel,
