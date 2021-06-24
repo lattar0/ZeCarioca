@@ -1,4 +1,3 @@
-const { Message } = require('discord.js')
 const { Command, ParrotEmbed } = require('../../')
 const { songInfos } = require('../../utils/music')
 
@@ -63,11 +62,10 @@ module.exports = class SearchCommand extends Command {
       if (!player.playing) return player.play()
 
       message.channel.reactMessage(player.textChannel.lastMessageID)
-
     })
 
     collector.on('end', collected => {
-      if (!collected.size) return message.channel.send("⚠️ | Você não informou nenhum número.")
+      if (!collected.size) return message.channel.send('⚠️ | Você não informou nenhum número.')
     })
   }
 }

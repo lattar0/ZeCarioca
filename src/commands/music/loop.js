@@ -24,7 +24,7 @@ module.exports = class LoopCommand extends Command {
 
     if (author.id !== player.dj.id || author.id !== player.track.requester.id) return channel.sendTimeout(messageLoop.setDescription('⚠️ | Você não é o DJ/requester deste(a) canal/música.'))
 
-    if (!option) return channel.sendTimeout(messageLoop.setDescription("⚠️ | Insira `0, 1 ou 2`.\n\n `0`: desliga o loop. \n `1`: define para a música atual. \n `2`: define para todas as músicas da lista."))
+    if (!option) return channel.sendTimeout(messageLoop.setDescription('⚠️ | Insira `0, 1 ou 2`.\n\n `0`: desliga o loop. \n `1`: define para a música atual. \n `2`: define para todas as músicas da lista.'))
 
     switch (option.toLowerCase()) {
       case '1':

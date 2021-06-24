@@ -18,7 +18,7 @@ module.exports = class PlayCommand extends Command {
 
   async run ({ message, channel, member, author }, args) {
     const memberChannel = member.voice.channel.id
-    
+
     const player = await this.client.music.join({
       guild: message.guild.id,
       voiceChannel: memberChannel,
