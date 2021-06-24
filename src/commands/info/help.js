@@ -25,13 +25,13 @@ module.exports = class HelpCommand extends Command {
     if (!this.client.commands.map(c => c.name).includes(args[0])) return channel.send('⚠️ | Comando não encontrado!')
     const command = this.client.commands.get(args[0])
 
-    HelpEmbed
+    const CommandHelp = new ParrotEmbed(author)
       .setTitle('📖 | Informações do Comando')
       .addField('🗄️ | Nome:', command.name, true)
       .addField('🔧 | Uso:', `\`${command.usage}\``, true)
       .addField('📝 | Descrição:', command.description, true)
       .addField('🔎 | Aliases:', `\`${command.aliases.join(', ')}\``, true)
       .addField('📌 | Categoria:', command.category, true)
-    channel.send(HelpEmbed)
+    channel.send(CommandHelp)
   }
 }
