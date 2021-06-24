@@ -22,7 +22,7 @@ module.exports = class PauseCommand extends Command {
     if (player.voiceChannel !== member.voice.channel.id) return channel.sendTimeout(pauseEmbed.setDescription('⚠️ | Você não está no mesmo canal que eu!'))
 
     if (!player.paused) {
-      message.channel.sendTimeout(pauseEmbed.setDescription('<:musicPause:708136948966883350> | A música foi pausada.'))
+      message.channel.sendTimeout(pauseEmbed.setDescription('⏸️ | A música foi pausada.'))
       player.pause(true)
     } else {
       message.channel.sendTimeout(pauseEmbed.setDescription('⚠️ | Á música já está pausada.'))
