@@ -1,7 +1,7 @@
 const { readdirSync, statSync } = require('fs')
 const { resolve } = require('path')
 
-module.exports = function readFile ({ dir }, callback) {
+module.exports = function readFile({ dir }, callback) {
   const files = readdirSync(dir)
 
   // eslint-disable-next-line array-callback-return

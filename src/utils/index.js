@@ -1,4 +1,4 @@
 module.exports = {
-  ParrotEmbed: require('./ParrotEmbed'),
+  CariocaEmbed: require('./CariocaEmbed'),
   Util: require('./Util')
 }

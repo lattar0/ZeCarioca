@@ -1,8 +1,8 @@
-const { Command, ParrotEmbed } = require('../../')
+const { Command, CariocaEmbed } = require('../../')
 const { loadTypes } = require('../../utils/music')
 
 module.exports = class PlayCommand extends Command {
-  constructor (client) {
+  constructor(client) {
     super(
       {
         name: 'play',
@@ -16,18 +16,29 @@ module.exports = class PlayCommand extends Command {
     )
   }
 
-  async run ({ message, channel, member, author }, args) {
+  async run({ message, channel, member, author }, args) {
     const memberChannel = member.voice.channel.id
 
-    const player = await this.client.music.join({
-      guild: message.guild.id,
-      voiceChannel: memberChannel,
-      textChannel: channel,
-      dj: author,
-      guildVolume: 100
-    }, { selfDeaf: true })
+    const player = await this.client.music.join(
+      {
+        guild: message.guild.id,
+        voiceChannel: memberChannel,
+        textChannel: channel,
+        dj: author,
+        guildVolume: 100
+      },
+      { selfDeaf: true }
+    )
 
-    if (player.voiceChannel !== memberChannel) return channel.sendTimeout(new ParrotEmbed(author).setDescription('⚠️ | Você não está no mesmo canal que eu!'))
+    if (player.voiceChannel !== memberChannel) {
+      return channel.send({
+        embeds: [
+          new CariocaEmbed(author).setDescription(
+            '⚠️ | Você não está no mesmo canal que eu!'
+          )
+        ]
+      })
+    }
 
     loadTypes(player, channel, author, args.join(' '))
 

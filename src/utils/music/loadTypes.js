@@ -1,19 +1,28 @@
-const { ParrotEmbed } = require('../../')
+const { CariocaEmbed } = require('../../')
 
 module.exports = async (player, channel, author, args) => {
-  const { tracks, playlistInfo, loadType } = await author.client.music.fetchTracks(args)
-  const embed = new ParrotEmbed(author)
+  const { tracks, playlistInfo, loadType } =
+    await author.client.music.fetchTracks(args)
+  const embed = new CariocaEmbed(author)
 
   switch (loadType) {
     case 'NO_MATCHES': {
-      channel.sendTimeout(embed.setDescription('⚠️ | Não achei nenhum resultado.'))
+      channel.send({
+        embeds: [embed.setDescription('⚠️ | Não achei nenhum resultado.')]
+      })
       break
     }
 
     case 'SEARCH_RESULT':
     case 'TRACK_LOADED': {
       player.addToQueue(tracks[0], author)
-      channel.sendTimeout(embed.setDescription(`🎵 | Adicionado na fila: **${tracks[0].title}**!`))
+      channel.send({
+        embeds: [
+          embed.setDescription(
+            `🎵 | Adicionado na fila: **${tracks[0].title}**!`
+          )
+        ]
+      })
 
       if (!player.playing) return player.play()
       break
@@ -22,7 +31,13 @@ module.exports = async (player, channel, author, args) => {
     case 'PLAYLIST_LOADED': {
       for (const track of tracks) player.addToQueue(track, author)
 
-      channel.sendTimeout(embed.setDescription(`🎵 | Adicionei \`${tracks.length}\` músicas da playlist \`${playlistInfo.name}\`.`))
+      channel.send({
+        embeds: [
+          embed.setDescription(
+            `🎵 | Adicionei \`${tracks.length}\` músicas da playlist \`${playlistInfo.name}\`.`
+          )
+        ]
+      })
       if (!player.playing) return player.play()
       break
     }
