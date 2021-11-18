@@ -17,8 +17,8 @@ module.exports = class CariocaClient extends Client {
       nodes: [
         {
           tag: 'Node 1',
-          host: 'lavalink.darrennathanael.com',
-          password: 'clover',
+          host: 'lava.link',
+          password: 'anything as a password',
           port: 80
         }
       ],

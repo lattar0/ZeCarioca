@@ -29,7 +29,7 @@ module.exports = class EvalCommand extends Command {
 
       channel.send('```js\n' + evaled + '```')
     } catch (e) {
-      channel.send(e)
+      channel.send(e.message)
     }
   }
 }

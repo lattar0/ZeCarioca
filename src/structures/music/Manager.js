@@ -1,5 +1,5 @@
-const { CariocaEmbed } = require('./utils')
-const { CariocaPlayer } = require('./structures/music')
+const { CariocaEmbed } = require('../../utils')
+const { CariocaPlayer } = require('../../structures/music')
 const { GorilinkManager } = require('gorilink')
 
 const eventEmbed = new CariocaEmbed()

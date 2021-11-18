@@ -26,18 +26,28 @@ module.exports = class VolumeCommand extends Command {
       return channel.send('⚠️ | Você não está no mesmo canal que eu!')
     }
 
-    const volume =
-      parseInt(args[0]) ||
-      `🎵 | O volume atual está em: ${player.state.volume}%`
+    const volume = parseInt(args[0])
 
-    if (isNaN(volume) || volume > 250 || volume <= 0) {
-      return message.channel.send(
-        '⚠️ | Digite um `número` inteiro entre 1 e 250 para definir.'
+    if (!volume) {
+      channel.send(`🎵 | O volume atual está em: ${player.state.volume}%`)
+    } else {
+      if (
+        isNaN(volume) ||
+        !Number.isInteger(volume) ||
+        volume >= 250 ||
+        volume <= 0
+      ) {
+        return message.channel.send(
+          '⚠️ | Digite um `número inteiro` entre 1 e 250 para definir.'
+        )
+      }
+
+      player.volume(volume)
+      message.channel.send(
+        `🎵 | O volume foi definido para: ${player.state.volume}%`
       )
     }
 
-    player.volume(volume)
-    message.channel.send(`🎵 | O volume foi definido para: ${args[0]}%`)
     message.channel.reactMessage(author.lastMessageID)
   }
 }
