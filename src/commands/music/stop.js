@@ -55,6 +55,6 @@ module.exports = class StopCommand extends Command {
       ]
     })
 
-    message.channel.reactMessage(player.textChannel.lastMessageID)
+    message.channel.reactMessage(message.id)
   }
 }

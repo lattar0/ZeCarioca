@@ -50,6 +50,6 @@ module.exports = class ResumeCommand extends Command {
 
     player.pause(false)
 
-    message.channel.reactMessage(player.textChannel.lastMessageID)
+    message.channel.reactMessage(message.id)
   }
 }

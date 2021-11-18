@@ -16,7 +16,7 @@ module.exports = async (player, channel, author, args) => {
     case 'SEARCH_RESULT':
     case 'TRACK_LOADED': {
       player.addToQueue(tracks[0], author)
-      channel.send({
+      channel.sendTimeout({
         embeds: [
           embed.setDescription(
             `🎵 | Adicionado na fila: **${tracks[0].title}**!`

@@ -59,6 +59,6 @@ module.exports = class NpCommand extends Command {
 
     channel.send({ embeds: [NpEmbed] })
 
-    message.channel.reactMessage(player.textChannel.lastMessageID)
+    message.channel.reactMessage(message.id)
   }
 }

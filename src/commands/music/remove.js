@@ -92,6 +92,6 @@ module.exports = class RemoveCommand extends Command {
 
     player.queue.remove(selected)
 
-    message.channel.reactMessage(player.textChannel.lastMessageID)
+    message.channel.reactMessage(message.id)
   }
 }

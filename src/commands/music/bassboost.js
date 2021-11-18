@@ -57,7 +57,7 @@ module.exports = class BassBoostCommand extends Command {
         .map((n, i) => ({ band: i, gain: type }))
     )
 
-    message.channel.reactMessage(player.textChannel.lastMessageID)
+    message.channel.reactMessage(message.id)
 
     player.bassboost = enabled
   }

@@ -7,7 +7,7 @@ module.exports = class SearchCommand extends Command {
       {
         name: 'search',
         aliases: ['procurar'],
-        category: 'Música',
+        category: 'Developer',
         description: 'Procure e reproduza a sua música favorita no Discord.',
         utils: { voiceChannel: true },
         usage: 'search <nome da música>; <número>'
@@ -91,7 +91,7 @@ module.exports = class SearchCommand extends Command {
 
       if (!player.playing) return player.play()
 
-      message.channel.reactMessage(player.textChannel.lastMessageID)
+      message.channel.reactMessage(message.id)
     })
 
     collector.on('end', collected => {

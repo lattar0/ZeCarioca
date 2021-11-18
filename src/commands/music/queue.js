@@ -55,6 +55,6 @@ module.exports = class QueueCommand extends Command {
           )
       ]
     })
-    message.channel.reactMessage(player.textChannel.lastMessageID)
+    message.channel.reactMessage(message.id)
   }
 }

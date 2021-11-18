@@ -39,11 +39,7 @@ module.exports = class SkipCommand extends Command {
     if (author.id === player.track.requester.id || author.id === player.dj.id) {
       player.stop()
       return message.channel.send({
-        embeds: [
-          skipEmbed.setDescription(
-            '<:musicNext:708136949436645505> | A música foi pulada!'
-          )
-        ]
+        embeds: [skipEmbed.setDescription('⏭️ | A música foi pulada!')]
       })
     }
 
@@ -59,7 +55,7 @@ module.exports = class SkipCommand extends Command {
       channel.send({
         embeds: [
           skipEmbed.setDescription(
-            `<:musicNext:708136949436645505> | Você votou, a votação atual está em: ${player.track.votesSkip.length}/3!`
+            `⏭️ | Você votou, a votação atual está em: ${player.track.votesSkip.length}/3!`
           )
         ]
       })
@@ -68,14 +64,10 @@ module.exports = class SkipCommand extends Command {
     if (player.track.votesSkip.length >= 3) {
       player.stop()
       return channel.send({
-        embeds: [
-          skipEmbed.setDescription(
-            '<:musicNext:708136949436645505> | A música foi pulada!'
-          )
-        ]
+        embeds: [skipEmbed.setDescription('⏭️ | A música foi pulada!')]
       })
     }
 
-    message.channel.reactMessage(player.textChannel.lastMessageID)
+    message.channel.reactMessage(message.id)
   }
 }

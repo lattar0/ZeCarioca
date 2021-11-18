@@ -34,8 +34,8 @@ module.exports = class VolumeCommand extends Command {
       if (
         isNaN(volume) ||
         !Number.isInteger(volume) ||
-        volume >= 250 ||
-        volume <= 0
+        volume > 250 ||
+        volume < 0
       ) {
         return message.channel.send(
           '⚠️ | Digite um `número inteiro` entre 1 e 250 para definir.'
@@ -48,6 +48,6 @@ module.exports = class VolumeCommand extends Command {
       )
     }
 
-    message.channel.reactMessage(author.lastMessageID)
+    channel.reactMessage(message.id)
   }
 }

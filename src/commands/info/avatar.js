@@ -29,7 +29,7 @@ module.exports = class AvatarCommand extends Command {
     return channel.send({
       embeds: [
         new CariocaEmbed(author)
-          .setDescription('Aqui está o avatar de: ' + user.username)
+          .setDescription(`Aqui está o avatar de: ${user.username}`)
           .setImage(avatarUrl)
       ]
     })

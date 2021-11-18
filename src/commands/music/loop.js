@@ -89,6 +89,6 @@ module.exports = class LoopCommand extends Command {
       }
     }
 
-    message.channel.reactMessage(player.textChannel.lastMessageID)
+    message.channel.reactMessage(message.id)
   }
 }

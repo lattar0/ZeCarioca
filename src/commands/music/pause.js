@@ -47,6 +47,6 @@ module.exports = class PauseCommand extends Command {
       })
     }
 
-    message.channel.reactMessage(player.textChannel.lastMessageID)
+    message.channel.reactMessage(message.id)
   }
 }
