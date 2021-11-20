@@ -5,10 +5,11 @@
   "author": "shaundeveloper",
   "license": "MIT",
   "scripts": {
+    "dev": "nodemon .",
     "start": "node .",
-    "dev": "nodemon -r dotenv/config .",
     "lint": "eslint ./",
-    "lint:fix": "eslint ./ --fix"
+    "lint:fix": "eslint ./ --fix",
+    "update-dependencies": "yarn upgrade-interactive --latest"
   },
   "dependencies": {
     "discord.js": "^13.3.1",
