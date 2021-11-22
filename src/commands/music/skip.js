@@ -21,7 +21,7 @@ module.exports = class SkipCommand extends Command {
     const skipEmbed = new CariocaEmbed(author)
 
     if (!player || player.queue.length <= 0) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           skipEmbed.setDescription('⚠️ | Não há músicas tocando no momento!')
         ]
@@ -29,7 +29,7 @@ module.exports = class SkipCommand extends Command {
     }
 
     if (player.voiceChannel !== member.voice.channel.id) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           skipEmbed.setDescription('⚠️ | Você não está no mesmo canal que eu!')
         ]
@@ -38,21 +38,21 @@ module.exports = class SkipCommand extends Command {
 
     if (author.id === player.track.requester.id || author.id === player.dj.id) {
       player.stop()
-      return message.channel.send({
+      return message.channel.sendTimeout({
         embeds: [skipEmbed.setDescription('⏭️ | A música foi pulada!')]
       })
     }
 
     if (player.track.votesSkip.includes(author.id)) {
       return channel
-        .sendTimeout({
+        .sendTimeoutTimeout({
           embeds: [skipEmbed.setDescription('⚠️ | Você já votou!')]
         })
         .then(msg => msg.delete({ timeout: 30000 }))
     } else {
       player.track.votesSkip.push(author.id)
 
-      channel.send({
+      channel.sendTimeout({
         embeds: [
           skipEmbed.setDescription(
             `⏭️ | Você votou, a votação atual está em: ${player.track.votesSkip.length}/3!`
@@ -63,7 +63,7 @@ module.exports = class SkipCommand extends Command {
 
     if (player.track.votesSkip.length >= 3) {
       player.stop()
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [skipEmbed.setDescription('⏭️ | A música foi pulada!')]
       })
     }

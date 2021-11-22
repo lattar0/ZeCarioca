@@ -21,7 +21,7 @@ module.exports = class ResumeCommand extends Command {
     const resumeQueue = new CariocaEmbed(author)
 
     if (!player || player.queue.length <= 0) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           resumeQueue.setDescription('⚠️ | Não há músicas tocando no momento!')
         ]
@@ -29,7 +29,7 @@ module.exports = class ResumeCommand extends Command {
     }
 
     if (player.voiceChannel !== member.voice.channel.id) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           resumeQueue.setDescription(
             '⚠️ | Você não está no mesmo canal que eu!'
@@ -39,12 +39,12 @@ module.exports = class ResumeCommand extends Command {
     }
 
     if (!player.paused) {
-      return message.channel.send({
+      return message.channel.sendTimeout({
         embeds: [resumeQueue.setDescription('⚠️ | Á música não está pausada.')]
       })
     }
 
-    message.channel.send({
+    message.channel.sendTimeout({
       embeds: [resumeQueue.setDescription('▶️ | A música foi retomada.')]
     })
 

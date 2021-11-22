@@ -7,7 +7,7 @@ module.exports = async (player, channel, author, args) => {
 
   switch (loadType) {
     case 'NO_MATCHES': {
-      channel.send({
+      channel.sendTimeout({
         embeds: [embed.setDescription('⚠️ | Não achei nenhum resultado.')]
       })
       break
@@ -31,7 +31,7 @@ module.exports = async (player, channel, author, args) => {
     case 'PLAYLIST_LOADED': {
       for (const track of tracks) player.addToQueue(track, author)
 
-      channel.send({
+      channel.sendTimeout({
         embeds: [
           embed.setDescription(
             `🎵 | Adicionei \`${tracks.length}\` músicas da playlist \`${playlistInfo.name}\`.`

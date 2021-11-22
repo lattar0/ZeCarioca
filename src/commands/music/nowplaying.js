@@ -20,7 +20,7 @@ module.exports = class NpCommand extends Command {
     const player = this.client.music.players.get(message.guild.id)
 
     if (!player || player.queue.length <= 0) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           new CariocaEmbed().setDescription(
             '⚠️ | Não há músicas tocando no momento!'
@@ -30,7 +30,7 @@ module.exports = class NpCommand extends Command {
     }
 
     if (player.voiceChannel !== member.voice.channel.id) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           new CariocaEmbed().setDescription(
             '⚠️ | Você não está no mesmo canal que eu!'
@@ -57,7 +57,7 @@ module.exports = class NpCommand extends Command {
         `https://img.youtube.com/vi/${player.track.identifier}/maxresdefault.jpg`
       )
 
-    channel.send({ embeds: [NpEmbed] })
+    channel.sendTimeout({ embeds: [NpEmbed] })
 
     message.channel.reactMessage(message.id)
   }

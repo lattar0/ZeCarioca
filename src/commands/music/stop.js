@@ -21,7 +21,7 @@ module.exports = class StopCommand extends Command {
     const stopEmbed = new CariocaEmbed(author)
 
     if (!player || player.queue.length <= 0) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           stopEmbed.setDescription('⚠️ | Não há músicas tocando no momento!')
         ]
@@ -29,7 +29,7 @@ module.exports = class StopCommand extends Command {
     }
 
     if (player.voiceChannel !== member.voice.channel.id) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           stopEmbed.setDescription('⚠️ | Você não está no mesmo canal que eu!')
         ]
@@ -37,7 +37,7 @@ module.exports = class StopCommand extends Command {
     }
 
     if (author.id !== player.track.requester.id || author.id !== player.dj.id) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           stopEmbed.setDescription(
             '⚠️ | Você não é o DJ/requester deste(a) canal/música.'
@@ -47,7 +47,7 @@ module.exports = class StopCommand extends Command {
     }
 
     player.destroy()
-    channel.send({
+    channel.sendTimeout({
       embeds: [
         stopEmbed.setDescription(
           '<:musicEject:708136949365473340> | Saindo do canal de voz.'

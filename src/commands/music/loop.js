@@ -21,19 +21,19 @@ module.exports = class LoopCommand extends Command {
     const messageLoop = new CariocaEmbed(author)
 
     if (!player || player.queue.length <= 0) {
-      return channel.send(
+      return channel.sendTimeout(
         messageLoop.setDescription('⚠️ | Não há músicas tocando no momento!')
       )
     }
 
     if (player.voiceChannel !== member.voice.channel.id) {
-      return channel.send(
+      return channel.sendTimeout(
         messageLoop.setDescription('⚠️ | Você não está no mesmo canal que eu!')
       )
     }
 
     if (author.id !== player.dj.id || author.id !== player.track.requester.id) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           messageLoop.setDescription(
             '⚠️ | Você não é o DJ/requester deste(a) canal/música.'
@@ -43,7 +43,7 @@ module.exports = class LoopCommand extends Command {
     }
 
     if (!option) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           messageLoop.setDescription(
             '⚠️ | Insira `0, 1 ou 2`.\n\n `0`: desliga o loop. \n `1`: define para a música atual. \n `2`: define para todas as músicas da lista.'
@@ -56,7 +56,7 @@ module.exports = class LoopCommand extends Command {
       case '1':
       case 'single': {
         player.loop(1)
-        channel.send({
+        channel.sendTimeout({
           embeds: [
             messageLoop.setDescription(
               '🔂 | O loop foi definido para a música atual!'
@@ -69,7 +69,7 @@ module.exports = class LoopCommand extends Command {
       case '2':
       case 'all': {
         player.loop(2)
-        channel.send({
+        channel.sendTimeout({
           embeds: [
             messageLoop.setDescription(
               '🔁 | O loop foi definido para a queue inteira!'
@@ -82,7 +82,7 @@ module.exports = class LoopCommand extends Command {
       case '0':
       case 'off': {
         player.loop(0)
-        channel.send({
+        channel.sendTimeout({
           embeds: [messageLoop.setDescription('⛔ | O loop foi desligado!')]
         })
         break

@@ -21,7 +21,7 @@ module.exports = class QueueCommand extends Command {
     const queueEmbed = new CariocaEmbed(author)
 
     if (!player || player.queue.length <= 0) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           queueEmbed.setDescription('⚠️ | Não há músicas tocando no momento!')
         ]
@@ -29,7 +29,7 @@ module.exports = class QueueCommand extends Command {
     }
 
     if (player.voiceChannel !== member.voice.channel.id) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           queueEmbed.setDescription('⚠️ | Você não está no mesmo canal que eu!')
         ]
@@ -39,7 +39,7 @@ module.exports = class QueueCommand extends Command {
     let index = 0
     const serverQueue = this.client.music.players.get(message.guild.id).queue
 
-    message.channel.send({
+    message.channel.sendTimeout({
       embeds: [
         queueEmbed
           .setTitle(`Tocando agora: \`${player.track.title}\``)

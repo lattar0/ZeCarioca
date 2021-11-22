@@ -20,7 +20,7 @@ module.exports = class BassBoostCommand extends Command {
     const bassboostEmbed = new CariocaEmbed(author)
 
     if (!player || player.queue.length <= 0) {
-      return channel.send(
+      return channel.sendTimeout(
         bassboostEmbed.setDescription(
           '⚠️ | Não há nenhum player tocando no momento.'
         )
@@ -28,7 +28,7 @@ module.exports = class BassBoostCommand extends Command {
     }
 
     if (player.voiceChannel !== member.voice.channel.id) {
-      return channel.send(
+      return channel.sendTimeout(
         bassboostEmbed.setDescription(
           '⚠️ | Você não está no mesmo canal que eu!'
         )
@@ -41,7 +41,7 @@ module.exports = class BassBoostCommand extends Command {
       ? { type: 0, enabled: false }
       : { type: 1, enabled: true }
 
-    channel.send({
+    channel.sendTimeout({
       embeds: [
         bassboostEmbed.setDescription(
           `💀 | O Bassboost foi definido como ${

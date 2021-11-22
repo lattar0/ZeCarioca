@@ -24,7 +24,7 @@ module.exports = class SearchCommand extends Command {
     )
 
     if (['LOAD_FAILED', 'NO_MATCHES'].includes(loadType)) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           new CariocaEmbed().setDescription(
             '⚠️ | Não consegui achar nenhuma música.'
@@ -37,7 +37,7 @@ module.exports = class SearchCommand extends Command {
       .setTitle(`Resultados de: \`${args.join(' ')}\``)
       .setDescription(songInfos(tracks, 'title'))
       .setFooter('Digite "cancelar" para cancelar a pesquisa')
-    const msg = await channel.send({ embeds: [embed] })
+    const msg = await channel.sendTimeout({ embeds: [embed] })
 
     const warnsEmbeds = new CariocaEmbed(author)
 
@@ -62,7 +62,7 @@ module.exports = class SearchCommand extends Command {
       if (m.content === 'cancelar') {
         if (!player) player.destroy()
         msg.delete()
-        return channel.send({
+        return channel.sendTimeout({
           embeds: [warnsEmbeds.setDescription('❌ | Pesquisa cancelada.')]
         })
       }
@@ -70,7 +70,7 @@ module.exports = class SearchCommand extends Command {
       const selected = parseInt(m.content) - 1
 
       if (isNaN(m.content)) {
-        return channel.send({
+        return channel.sendTimeout({
           embeds: [
             warnsEmbeds.setDescription('⚠️ | Você não forneceu um número!')
           ]
@@ -79,7 +79,7 @@ module.exports = class SearchCommand extends Command {
 
       player.addToQueue(tracks[selected], message.author)
 
-      channel.send({
+      channel.sendTimeout({
         embeds: [
           new CariocaEmbed().setDescription(
             `▶️ | Adicionado na playlist: **${tracks[selected].title}**.`
@@ -96,7 +96,7 @@ module.exports = class SearchCommand extends Command {
 
     collector.on('end', collected => {
       if (!collected.size) {
-        return message.channel.send('⚠️ | Você não informou nenhum número.')
+        return message.channel.sendTimeout('⚠️ | Você não informou nenhum número.')
       }
     })
   }

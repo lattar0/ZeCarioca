@@ -21,7 +21,7 @@ module.exports = class CariocaClient extends Client {
         '616410427794128909',
         '390211630060797954'
       ],
-      prefixes: ['ze.', 'ze!', 'zeca.', 'zeca!'],
+      prefixes: ['zet.', 'zet!'],
       embed_color: '#56784d'
     }
 

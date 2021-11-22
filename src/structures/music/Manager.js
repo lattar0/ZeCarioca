@@ -18,14 +18,14 @@ module.exports = client =>
       console.log(`${node.tag || node.host} - Lavalink conectado com sucesso!`)
     })
     .on('trackStart', async (player, track) => {
-      player.textChannel.send({
+      player.textChannel.sendTimeout({
         embeds: [
           eventEmbed.setDescription(`🎵 | Tocando agora: **${track.title}**`)
         ]
       })
     })
     .on('queueEnd', async player => {
-      player.textChannel.send({
+      player.textChannel.sendTimeout({
         embeds: [
           eventEmbed.setDescription(
             '⏹️ | A lista de reprodução acabou! Saindo do canal.'

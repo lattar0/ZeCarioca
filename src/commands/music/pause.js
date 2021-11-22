@@ -21,7 +21,7 @@ module.exports = class PauseCommand extends Command {
     const pauseEmbed = new CariocaEmbed(author)
 
     if (!player || player.queue.length <= 0) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           pauseEmbed.setDescription('⚠️ | Não há músicas tocando no momento!')
         ]
@@ -29,7 +29,7 @@ module.exports = class PauseCommand extends Command {
     }
 
     if (player.voiceChannel !== member.voice.channel.id) {
-      return channel.send({
+      return channel.sendTimeout({
         embeds: [
           pauseEmbed.setDescription('⚠️ | Você não está no mesmo canal que eu!')
         ]
@@ -37,12 +37,12 @@ module.exports = class PauseCommand extends Command {
     }
 
     if (!player.paused) {
-      message.channel.send({
+      message.channel.sendTimeout({
         embeds: [pauseEmbed.setDescription('⏸️ | A música foi pausada.')]
       })
       player.pause(true)
     } else {
-      message.channel.send({
+      message.channel.sendTimeout({
         embeds: [pauseEmbed.setDescription('⚠️ | Á música já está pausada.')]
       })
     }
