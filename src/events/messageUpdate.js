@@ -1,10 +1,10 @@
 module.exports = class Message {
-  constructor (client) {
+  constructor(client) {
     this.client = client
   }
 
-  event (oldMessage, newMessage) {
+  event(oldMessage, newMessage) {
     if (oldMessage === newMessage) return
-    this.client.emit('message', newMessage)
+    this.client.emit('messageCreate', newMessage)
   }
 }

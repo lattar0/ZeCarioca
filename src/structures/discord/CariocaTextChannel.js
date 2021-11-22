@@ -1,20 +1,11 @@
-const { Structures } = require('discord.js')
+const { TextChannel } = require('discord.js')
 
-Structures.extend('TextChannel', TextChannel => {
-  class CariocaTextChannel extends TextChannel {
-    // eslint-disable-next-line no-useless-constructor
-    constructor (...data) {
-      super(...data)
-    }
+TextChannel.prototype.sendTimeout = function (content, timeout = 30000) {
+  return this.send(content)
+    .then(msg => msg.delete({ timeout }))
+    .catch(console.log)
+}
 
-    sendTimeout (content, timeout = 30000) {
-      return this.send(content).then(msg => msg.delete({ timeout }))
-    }
-
-    reactMessage (messageId, emoji = '👍') {
-      this.messages.cache.get(messageId).react(emoji)
-    }
-  }
-
-  return CariocaTextChannel
-})
+TextChannel.prototype.reactMessage = function (messageId, emoji = '👍') {
+  return this.messages.cache.get(messageId).react(emoji).catch()
+}

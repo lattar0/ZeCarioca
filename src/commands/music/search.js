@@ -1,13 +1,13 @@
-const { Command, ParrotEmbed } = require('../../')
+const { Command, CariocaEmbed } = require('../../')
 const { songInfos } = require('../../utils/music')
 
 module.exports = class SearchCommand extends Command {
-  constructor (client) {
+  constructor(client) {
     super(
       {
         name: 'search',
         aliases: ['procurar'],
-        category: 'Música',
+        category: 'Developer',
         description: 'Procure e reproduza a sua música favorita no Discord.',
         utils: { voiceChannel: true },
         usage: 'search <nome da música>; <número>'
@@ -16,56 +16,88 @@ module.exports = class SearchCommand extends Command {
     )
   }
 
-  async run ({ message, channel, member, author }, args) {
+  async run({ message, channel, member, author }, args) {
     const memberChannel = member.voice.channel.id
 
-    const { tracks, loadType } = await this.client.music.fetchTracks(args.join(' '))
+    const { tracks, loadType } = await this.client.music.fetchTracks(
+      args.join(' ')
+    )
 
-    if (['LOAD_FAILED', 'NO_MATCHES'].includes(loadType)) return channel.sendTimeout(new ParrotEmbed().setDescription('⚠️ | Não consegui achar nenhuma música.'))
+    if (['LOAD_FAILED', 'NO_MATCHES'].includes(loadType)) {
+      return channel.send({
+        embeds: [
+          new CariocaEmbed().setDescription(
+            '⚠️ | Não consegui achar nenhuma música.'
+          )
+        ]
+      })
+    }
 
-    const embed = new ParrotEmbed(author)
+    const embed = new CariocaEmbed(author)
       .setTitle(`Resultados de: \`${args.join(' ')}\``)
       .setDescription(songInfos(tracks, 'title'))
       .setFooter('Digite "cancelar" para cancelar a pesquisa')
-    const msg = await channel.send(embed)
+    const msg = await channel.send({ embeds: [embed] })
 
-    const warnsEmbeds = new ParrotEmbed(author)
+    const warnsEmbeds = new CariocaEmbed(author)
 
     const filter = msg => msg.author.id === message.author.id
 
-    const collector = message.channel.createMessageCollector(filter, { time: 30000, max: 1 })
+    const collector = message.channel.createMessageCollector(filter, {
+      time: 30000,
+      max: 1
+    })
 
     collector.on('collect', async m => {
-      const player = await this.client.music.join({
-        guild: message.guild.id,
-        voiceChannel: memberChannel,
-        textChannel: channel,
-        dj: author
-      }, { selfDeaf: true })
+      const player = await this.client.music.join(
+        {
+          guild: message.guild.id,
+          voiceChannel: memberChannel,
+          textChannel: channel,
+          dj: author
+        },
+        { selfDeaf: true }
+      )
 
       if (m.content === 'cancelar') {
         if (!player) player.destroy()
         msg.delete()
-        return channel.sendTimeout(warnsEmbeds.setDescription('❌ | Pesquisa cancelada.'))
+        return channel.send({
+          embeds: [warnsEmbeds.setDescription('❌ | Pesquisa cancelada.')]
+        })
       }
 
       const selected = parseInt(m.content) - 1
 
-      if (isNaN(m.content)) return channel.sendTimeout(warnsEmbeds.setDescription('⚠️ | Você não forneceu um número!'))
+      if (isNaN(m.content)) {
+        return channel.send({
+          embeds: [
+            warnsEmbeds.setDescription('⚠️ | Você não forneceu um número!')
+          ]
+        })
+      }
 
       player.addToQueue(tracks[selected], message.author)
 
-      channel.send(new ParrotEmbed().setDescription(`▶️ | Adicionado na playlist: **${tracks[selected].title}**.`))
+      channel.send({
+        embeds: [
+          new CariocaEmbed().setDescription(
+            `▶️ | Adicionado na playlist: **${tracks[selected].title}**.`
+          )
+        ]
+      })
 
       msg.delete()
 
       if (!player.playing) return player.play()
 
-      message.channel.reactMessage(player.textChannel.lastMessageID)
+      message.channel.reactMessage(message.id)
     })
 
     collector.on('end', collected => {
-      if (!collected.size) return message.channel.send('⚠️ | Você não informou nenhum número.')
+      if (!collected.size) {
+        return message.channel.send('⚠️ | Você não informou nenhum número.')
+      }
     })
   }
 }

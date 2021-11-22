@@ -1,11 +1,15 @@
 module.exports = {
   env: {
-    node: true,
-    es2020: true,
-    commonjs: true
+    browser: true,
+    commonjs: true,
+    es2021: true,
+    node: true
   },
   extends: ['standard'],
   parserOptions: {
-    ecmaVersion: 11
+    ecmaVersion: 12
+  },
+  rules: {
+    'space-before-function-paren': 'off'
   }
 }

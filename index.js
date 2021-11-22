@@ -1,9 +1,7 @@
-const Parrot = require('./src/Parrot')
-const config = require('./config')
-const client = new Parrot(config)
-
+require('dotenv').config()
 require('moment-duration-format')
 
-client
-  .initializeLoaders()
-  .login(process.env.DISCORD_TOKEN)
+const Client = require('./src/CariocaClient')
+const client = new Client()
+
+client.initializeLoaders().login()

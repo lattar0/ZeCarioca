@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 16
       - name: Install packages
         run: yarn install
       - name: ESLint
@@ -26,14 +26,14 @@ jobs:
     needs: test
     if: github.event_name == 'push'
     steps:
-    - uses: actions/checkout@master
-    - name: Build and publish to registry
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: shaundeveloper/zecarioca
-        tag_with_ref: true
+      - uses: actions/checkout@master
+      - name: Build and publish to registry
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: shaundeveloper/zecarioca
+          tag_with_ref: true
 
   deploy:
     name: Deploy
@@ -41,16 +41,16 @@ jobs:
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
     steps:
-    - uses: actions/checkout@master
-    - name: Run docker build
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          docker stop ze
-          docker rm ze
-          docker pull shaundeveloper/zecarioca:dev
-          docker run --name ze --env-file ~/.env --restart unless-stopped -d shaundeveloper/zecarioca:dev
-          docker system prune -a -f
+      - uses: actions/checkout@master
+      - name: Run docker build
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker stop ze
+            docker rm ze
+            docker pull shaundeveloper/zecarioca:dev
+            docker run --name ze --env-file ~/.env --restart unless-stopped -d shaundeveloper/zecarioca:dev
+            docker system prune -a -f

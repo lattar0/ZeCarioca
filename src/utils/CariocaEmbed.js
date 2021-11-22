@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js')
 
-module.exports = class ParrotEmbed extends MessageEmbed {
-  constructor (user) {
+module.exports = class CariocaEmbed extends MessageEmbed {
+  constructor(user) {
     super(user)
 
     this.setColor('#56784d')
